@@ -1,0 +1,570 @@
+[
+  {
+    "type": "post",
+    "url": "/authorization",
+    "title": "会员登录&注册",
+    "description": "<p>会员登录到供应商进行游戏。首先供应商会检测用户是否存在， 如果不存在，供应商自动创建账号，如果存在则返回游戏地址，直接进入游戏大厅</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "account_type",
+            "description": "<p>玩家类型：1：正式玩家，2：试玩玩家，默认为1</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "login_type",
+            "description": "<p>登录类型：1：pc，2:h5，默认为1</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|username|agent|login_type')/SHA1('securityKey|account_type|agent|login_type')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": \"https://pc.lggame.co/game.php?uid=652e4eef5764df2b7d123\",\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/AuthController.go",
+    "groupTitle": "User",
+    "name": "PostAuthorization"
+  },
+  {
+    "type": "post",
+    "url": "/deposit",
+    "title": "会员充值",
+    "description": "<p>会员将接入商钱包的钱，部分或者全部提取到游戏供应商的账户上进行游戏</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "amount",
+            "description": "<p>充值金额</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|username|amount|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"amount\": 100,//充值金额\n\t\t\"order_sn\": \"LAA31303521259023\"//订单号\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/CashController.go",
+    "groupTitle": "User",
+    "name": "PostDeposit"
+  },
+  {
+    "type": "post",
+    "url": "/exceptionOrderLog",
+    "title": "异常注单信息获取",
+    "description": "<p>异常注单信息获取</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_date",
+            "description": "<p>开始时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "end_date",
+            "description": "<p>结束时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|start_date|end_date|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"data\": [\n\t\t\t{\n\t\t\t\t\"_id\": \"59fad2fce138230c391efe65\",\n\t\t\t\t\"user_name\": \"D01test12345\",\n\t\t\t\t\"hall_name\": \"tlebo01\",\n\t\t\t\t\"round_no\": \"2e0fac7f9449eeb0\",\n\t\t\t\t\"payout_win\": -40,\n\t\t\t\t\"user_monry\": 0,\n\t\t\t\t\"action_user\": \"chensj\",\n\t\t\t\t\"action_user_id\": 0,\n\t\t\t\t\"desc\": \"数组数组数组数组数组数组数组数组数组数组数(取消)\",\n\t\t\t\t\"bet_time\": \"2017-11-02 15:17:52\",\n\t\t\t\t\"add_time\": \"2017-11-02 16:10:36\"\n\t\t\t}\n\t\t]\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/ExceptionOrderLogController.go",
+    "groupTitle": "User",
+    "name": "PostExceptionorderlog"
+  },
+  {
+    "type": "post",
+    "url": "/getBetList",
+    "title": "获取注单详情信息",
+    "description": "<p>获取注单详情信息（代理商为联调账号时可用）</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"data\": [\n\t\t\t{\n\t\t\t\t\"user_name\": \"Qyi23qaqaq\",//玩家登陆名\n\t\t\t\t\"game_id\": 91,//游戏id\n\t\t\t\t\"game_hall_id\": 0,//游戏厅id\n\t\t\t\t\"game_name\": \"百家乐\",//游戏名称\n\t\t\t\t\"bet_money\": 30000,//下注金额\n\t\t\t\t\"bet_money_valid\": 30000,//有效下注金额\n\t\t\t\t\"round_no\": \"f4079b5d14b5df68\",//局ID\n\t\t\t\t\"add_time\": \"2017-12-08 16:48:39\"//下注时间\n\t\t\t}\n\t\t]\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/UserCashController.go",
+    "groupTitle": "User",
+    "name": "PostGetbetlist"
+  },
+  {
+    "type": "post",
+    "url": "/getDateList",
+    "title": "代理商根据时间段获取注单信息",
+    "description": "<p>代理商根据时间段获取注单信息</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_date",
+            "description": "<p>开始时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "end_date",
+            "description": "<p>结束时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|start_date|end_date|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"data\": [\n\t\t\t{\n\t\t\t\t\"round_no\": \"3c4c0e4df67432bd\",\n\t\t\t\t\"game_id\": 93,\n\t\t\t\t\"game_hall_id\": 0,\n\t\t\t\t\"game_name\": \"龙虎 \",\n\t\t\t\t\"server_name\": \"15\",\n\t\t\t\t\"total_bet_score\": 70,\n\t\t\t\t\"valid_bet_score_total\": 70,\n\t\t\t\t\"game_result\": \"8;5\",\n\t\t\t\t\"total_win_score\": 70,\n\t\t\t\t\"user_name\": \"test123451\",\n\t\t\t\t\"is_mark\": 1,\n\t\t\t\t\"dwRound\": \"\",\n\t\t\t\t\"remark\": \"24;53\",\n\t\t\t\t\"_id\": \"5a056e10e1382363171f7ec3\",\n\t\t\t\t\"game_period\": \"248-56\",//靴+局\n\t\t\t\t\"start_time\": \"2017-11-10 17:15:06\"\n\t\t\t}\n\t\t]\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/UserCashController.go",
+    "groupTitle": "User",
+    "name": "PostGetdatelist"
+  },
+  {
+    "type": "post",
+    "url": "/getKey",
+    "title": "接入商获取SecurityKey",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"expiration\": \"2017-12-22 13:16:22\",\n\t\t\"security_key\": \"25bc4e45a213f80eb56247b5e009a4bd1c19f9ff\"\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/KeyController.go",
+    "groupTitle": "User",
+    "name": "PostGetkey"
+  },
+  {
+    "type": "post",
+    "url": "/orderList",
+    "title": "代理商批量获取注单信息",
+    "description": "<p>代理商批量获取注单信息</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "deadline",
+            "description": "<p>日期</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|deadline|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"data\": [\n\t\t\t{\n\t\t\t\t\"round_no\": \"3c4c0e4df67432bd\",\n\t\t\t\t\"game_id\": 93,\n\t\t\t\t\"game_hall_id\": 0,\n\t\t\t\t\"game_name\": \"龙虎 \",\n\t\t\t\t\"server_name\": \"15\",\n\t\t\t\t\"total_bet_score\": 70,\n\t\t\t\t\"valid_bet_score_total\": 70,\n\t\t\t\t\"game_result\": \"8;5\",\n\t\t\t\t\"total_win_score\": 70,\n\t\t\t\t\"user_name\": \"test123451\",\n\t\t\t\t\"is_mark\": 1,\n\t\t\t\t\"dwRound\": \"\",\n\t\t\t\t\"remark\": \"24;53\",\n\t\t\t\t\"_id\": \"5a056e10e1382363171f7ec3\",\n\t\t\t\t\"game_period\": \"248-56\",//靴+局\n\t\t\t\t\"start_time\": \"2017-11-10 17:15:06\"\n\t\t\t}\n\t\t]\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/UserCashController.go",
+    "groupTitle": "User",
+    "name": "PostOrderlist"
+  },
+  {
+    "type": "post",
+    "url": "/transferLog",
+    "title": "会员存取款状态查询",
+    "description": "<p>当游戏接入商调用会员存款或取款接口，数据已发出但未接收到处理结果， 则可使用此接口至游戏供应商查询处理状态。目前只支持单条记录查询。</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "serial",
+            "description": "<p>流水号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|serial|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,//状态码，0：成功，非0：错误\n\t\"result\": {\n\t\t\"balance\": 1332234,//余额\n\t\t\"member_status\": \"Normal\",//会员状态，Normal：正常，Abnormal：异常\n\t\t\"online_status\": \"Offline\"//在线状态，Online：在线，Offline：离线\n\t},\n\t\"text\": \"Success\"//文本描述\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/TransferLogController.go",
+    "groupTitle": "User",
+    "name": "PostTransferlog"
+  },
+  {
+    "type": "post",
+    "url": "/user",
+    "title": "获取供应商会员信息",
+    "description": "<p>获取会员在供应商的相关信息</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|username|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,//状态码，0：成功，非0：错误\n\t\"result\": {\n\t\t\"balance\": 1332234,//余额\n\t\t\"member_status\": \"Normal\",//会员状态，Normal：正常，Abnormal：异常\n\t\t\"online_status\": \"Offline\"//在线状态，Online：在线，Offline：离线\n\t},\n\t\"text\": \"Success\"//文本描述\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/PlayerController.go",
+    "groupTitle": "User",
+    "name": "PostUser"
+  },
+  {
+    "type": "post",
+    "url": "/withDrawal",
+    "title": "会员取款",
+    "description": "<p>会员将接入商钱包的钱， 取款时需调用</p>",
+    "group": "User",
+    "permission": [
+      {
+        "name": "@apiVersion 1.0.0"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "agent",
+            "description": "<p>代理商用户名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>用户登录名称</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "float",
+            "optional": false,
+            "field": "amount",
+            "description": "<p>扣款金额</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token:SHA1('securityKey|username|agent')</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "成功返回格式",
+          "content": "{\n\t\"code\": 0,\n\t\"result\": {\n\t\t\"amount\": 100,//扣款金额\n\t\t\"order_sn\": \"LAA31303521259023\"//订单号\n\t},\n\t\"text\": \"Success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "app/controllers/CashController.go",
+    "groupTitle": "User",
+    "name": "PostWithdrawal"
+  }
+]
